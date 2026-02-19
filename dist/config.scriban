@@ -252,6 +252,7 @@ with bundle
     js prismjs "/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"
     js prismjs "/plugins/show-language/prism-show-language.min.js"
     # js mermaid "/dist/mermaid.min.js"
+    js "/js/prism-scriban.js"
     js "/js/main.js"
 
     # copy font files
