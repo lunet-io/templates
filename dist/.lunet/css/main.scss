@@ -330,6 +330,26 @@ button.copy-to-clipboard-button[data-copy-state="copy-error"] > span {
     color: var(--lunet-color-red);
 }
 
+/**********************************************
+ * Prism toolbar (language label + copy button)
+ **********************************************/
+
+// Give toolbar items an opaque backdrop so code text behind them is hidden.
+div.code-toolbar > .toolbar > .toolbar-item > a,
+div.code-toolbar > .toolbar > .toolbar-item > button,
+div.code-toolbar > .toolbar > .toolbar-item > span {
+    background: var(--lunet-code-bg);
+    font-size: 0.8em;
+}
+
+// On mobile, hide the toolbar entirely — screen is too narrow and
+// copying code is rarely useful on touch devices.
+@media screen and (max-width: 768px) {
+    div.code-toolbar > .toolbar {
+        display: none !important;
+    }
+}
+
 .c64-text {
     background-image: linear-gradient(to right,
         var(--lunet-color-bright-red),
@@ -1117,31 +1137,45 @@ li.toc-list-item {
 }
 
 // Scrollbar styling (theme-friendly)
+// Shared mixin so sidebar and code blocks use the same look.
+@mixin lunet-themed-scrollbar($track-bg: rgba(var(--lunet-color-foreground-rgb), 0.06),
+                               $thumb-bg: rgba(var(--lunet-color-foreground-rgb), 0.18),
+                               $thumb-hover: rgba(var(--lunet-color-foreground-rgb), 0.26)) {
+    scrollbar-width: thin; // Firefox
+    scrollbar-color: $thumb-bg $track-bg;
+
+    &::-webkit-scrollbar {
+        width: 10px;
+        height: 10px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background-color: $track-bg;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: $thumb-bg;
+        border-radius: 999px;
+        border: 2px solid $track-bg;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+        background-color: $thumb-hover;
+    }
+}
+
 .menu-sidebar,
 .menu-sidebar * {
-    scrollbar-width: thin; // Firefox
-    scrollbar-color:
-        rgba(var(--lunet-color-foreground-rgb), 0.28)
-        rgba(var(--lunet-color-foreground-rgb), 0.06);
+    @include lunet-themed-scrollbar;
 }
 
-.menu-sidebar ::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
-}
-
-.menu-sidebar ::-webkit-scrollbar-track {
-    background-color: rgba(var(--lunet-color-foreground-rgb), 0.05);
-}
-
-.menu-sidebar ::-webkit-scrollbar-thumb {
-    background-color: rgba(var(--lunet-color-foreground-rgb), 0.18);
-    border-radius: 999px;
-    border: 2px solid rgba(var(--lunet-color-foreground-rgb), 0.05);
-}
-
-.menu-sidebar ::-webkit-scrollbar-thumb:hover {
-    background-color: rgba(var(--lunet-color-foreground-rgb), 0.26);
+// Prism code blocks – use the code-block background so the scrollbar blends in.
+pre[class*="language-"] {
+    @include lunet-themed-scrollbar(
+        $track-bg: var(--lunet-code-bg),
+        $thumb-bg: rgba(var(--lunet-color-foreground-rgb), 0.22),
+        $thumb-hover: rgba(var(--lunet-color-foreground-rgb), 0.36)
+    );
 }
 
 /* Remove sticky on mobile */
