@@ -152,7 +152,7 @@ func site_project_init
     project_github_repo = site_project_github_repo ?? "Project.Repository"
 
     baseurl = baseurl ?? site_project_baseurl ?? "https://example.com"
-    basepath = basepath ?? site_project_basepath ?? ""
+    basepath = site_project_basepath ?? ""
     project_favicon_path = site_project_favicon_path
     project_github_user = site_project_github_user
     project_github_repo_url = $"https://github.com/{project_github_user}/{project_github_repo}/"
