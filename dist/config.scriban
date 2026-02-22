@@ -282,6 +282,6 @@ with builtins
 end
 
 with markdown
-    # Use Bootstrap img_fluid for all Markdown image links
-    options.css_img_attr = "img-fluid"
+    # Activate bootstrap extensions for markdown rendering (tables, img-fluid, etc.)
+    options.extensions = "advanced+bootstrap"
 end
